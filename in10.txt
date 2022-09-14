@@ -1,0 +1,9 @@
+,
+'a string'
+# a comment
+Schemes
+FactsRules
+::-
+agssdf
+Schemess
+

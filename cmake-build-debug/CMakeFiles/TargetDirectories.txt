@@ -1,0 +1,3 @@
+/Users/tysonpeterson/Documents/CS/cs236/Project1_Starter_Code/cmake-build-debug/CMakeFiles/Project1_Starter_Code.dir
+/Users/tysonpeterson/Documents/CS/cs236/Project1_Starter_Code/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/tysonpeterson/Documents/CS/cs236/Project1_Starter_Code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
