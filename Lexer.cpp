@@ -1,23 +1,23 @@
 #include "Lexer.h"
-#include "Automata/CommaAutomaton.h"
-#include "Automata/PeriodAutomaton.h"
-#include "Automata/Q_MarkAutomaton.h"
-#include "Automata/LeftParenAutomaton.h"
-#include "Automata/RightParenAutomaton.h"
-#include "Automata/ColonAutomaton.h"
-#include "Automata/ColonDashAutomaton.h"
-#include "Automata/MultiplyAutomaton.h"
-#include "Automata/AddAutomaton.h"
-#include "Automata/SchemesAutomaton.h"
-#include "Automata/FactsAutomaton.h"
-#include "Automata/RulesAutomaton.h"
-#include "Automata/QueriesAutomaton.h"
-#include "Automata/IDAutomaton.h"
-#include "Automata/StringAutomaton.h"
-#include "Automata/LineCommentAutomaton.h"
-#include "Automata/BlockCommentAutomaton.h"
-#include "Automata/UndefinedAutomaton.h"
-#include "Automata/EOFAutomaton.h"
+#include "CommaAutomaton.h"
+#include "PeriodAutomaton.h"
+#include "Q_MarkAutomaton.h"
+#include "LeftParenAutomaton.h"
+#include "RightParenAutomaton.h"
+#include "ColonAutomaton.h"
+#include "ColonDashAutomaton.h"
+#include "MultiplyAutomaton.h"
+#include "AddAutomaton.h"
+#include "SchemesAutomaton.h"
+#include "FactsAutomaton.h"
+#include "RulesAutomaton.h"
+#include "QueriesAutomaton.h"
+#include "IDAutomaton.h"
+#include "StringAutomaton.h"
+#include "LineCommentAutomaton.h"
+#include "BlockCommentAutomaton.h"
+#include "UndefinedAutomaton.h"
+#include "EOFAutomaton.h"
 
 Lexer::Lexer()
 {
@@ -26,7 +26,14 @@ Lexer::Lexer()
 
 Lexer::~Lexer()
 {
-    // TODO: need to clean up the memory in `automata` and `tokens`
+    for (int i = 0; i < automata.size(); i++)
+    {
+        delete automata.at(i);
+    }
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        delete tokens.at(i);
+    }
 }
 
 void Lexer::CreateAutomata()
@@ -54,7 +61,7 @@ void Lexer::CreateAutomata()
 
 void Lexer::Run(std::string& input)
 {
-    int lineNumber = 0;
+    int lineNumber = 1;
     int maxRead = 0;
     Automaton* maxAutomata = nullptr;
     Token* newToken = nullptr;
@@ -92,7 +99,7 @@ void Lexer::Run(std::string& input)
         if (maxRead > 0)
         {
             newToken = maxAutomata->CreateToken(input.substr(0, maxRead), lineNumber);
-            maxAutomata->NewLinesRead();
+            lineNumber += maxAutomata->NewLinesRead();
             tokens.push_back(newToken);
         }
         else
@@ -113,5 +120,6 @@ std::string Lexer::toString()
     {
         output << tokens.at(i)->TokenToString() << std::endl;
     }
+    output << "Total Tokens = " << tokens.size() << std::endl;
     return output.str();
 }
